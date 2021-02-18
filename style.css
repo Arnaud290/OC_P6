@@ -16,3 +16,15 @@ nav ul
 list-style-type: none;
 display: flex;
 }
+
+header
+{
+    display: flex;
+}
+
+header h1
+{
+    font-weight: bold;
+    font-size: 4em;
+    font-style: oblique;
+}
