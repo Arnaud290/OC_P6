@@ -11,15 +11,16 @@ body
     margin: auto;
 }
 
-nav ul
-{
-list-style-type: none;
-display: flex;
-}
-
 header
 {
     display: flex;
+    
+    background-color: rgb(184, 34, 34);
+    height: 200px; 
+    flex-direction: column;
+    align-items:center; 
+    border-radius: 10px;
+  
 }
 
 header h1
@@ -27,4 +28,21 @@ header h1
     font-weight: bold;
     font-size: 4em;
     font-style: oblique;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    
 }
+
+header nav ul
+{
+    display: flex;
+    float: right;
+    list-style-type: none;
+    margin-top: 0em;
+}   
+ 
+header nav li
+{
+    margin-right: 20px;    
+}
+
