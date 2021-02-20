@@ -10,17 +10,14 @@ body
     width: 900px;
     margin: auto;
 }
-
 header
 {
     display: flex;
-    
     background-color: rgb(184, 34, 34);
     height: 200px; 
     flex-direction: column;
     align-items:center; 
-    border-radius: 10px;
-  
+    border-radius: 50px;
 }
 
 header h1
@@ -33,16 +30,120 @@ header h1
     
 }
 
+nav a
+{
+    text-decoration: none;
+    color:#181818;
+}
+
+nav a:hover
+{
+    color: #ffffff
+}
+
+
 header nav ul
 {
     display: flex;
     float: right;
     list-style-type: none;
     margin-top: 0em;
+    font-size: 1.3em;
+    color: #181818;
+    padding-bottom: 3px; 
 }   
  
 header nav li
 {
     margin-right: 20px;    
+    
 }
 
+#bestFilm
+{
+    display: flex;
+    flex-direction: column;
+    align-items:center; 
+    background-color: rgb(129, 116, 116);
+    border-radius: 50px;
+    margin-top: 0.3em;
+}
+
+#bestFilm h1
+{
+    font-size: 3em;
+    font-weight: bold; 
+}
+
+.title
+{
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.description
+{
+    max-width: 30%;
+    text-align: center;
+}
+
+#boutonInfo
+{
+    height: 50px;
+    background-color:  rgb(95, 95, 95);
+    border-radius: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 3px 8px 0px 8px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    display: flex;
+    flex-direction: column;  
+    align-items:center; 
+    opacity: 90%;
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: black;
+  }
+  
+  .modal-content p
+  {
+      text-align: center;
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
