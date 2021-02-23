@@ -33,7 +33,12 @@ function bestFilmResultMainPage(result){
 
 loadResults(bestFilmUrlList, bestFilmUrlFunc);
 
+let btn = document.getElementById("boutonInfo");
 
+btn.onclick = function() {
+  loadResults(bestFilmUrl, FilmResultsModale);
+  modal.style.display = "block";
+}
 
 //Modal Results
 
@@ -55,13 +60,7 @@ function FilmResultsModale(result){
 // Modal Window
 
 let modal = document.getElementById("myModal");
-let btn = document.getElementById("boutonInfo");
 let span = document.getElementsByClassName("close")[0];
-btn.onclick = function() {
-  loadResults(bestFilmUrl, FilmResultsModale);
-  modal.style.display = "block";
-}
-
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -72,36 +71,47 @@ window.onclick = function(event) {
   }
 }
 
-// Category Action
+// Categories
 
-let actionFilmUrlList = "http://localhost:8000/api/v1/titles/?genre=Action&sort_by=-votes,-imdb_score";
-let elt = document.getElementById("categoryOne");
-let title = document.createElement("h1");
-title.textContent = "Action";
-elt.appendChild(title);
+let FilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score";
+let section = document.createElement("section");
+let idSection = "bestFilms";
+let titleCategory = "Films les mieux Notés";
+
+section.setAttribute("class", "category");
+section.setAttribute("id", idSection);
+document.getElementById("blockPage").appendChild(section);
+let p = document.createElement("p");
+p.setAttribute("class", "titleCategory");
+p.setAttribute("id", idSection + 'Title');
+section.appendChild(p);
+let h1 = document.createElement("h1");
+h1.textContent = titleCategory; 
+document.getElementById(idSection + 'Title').appendChild(h1);
+let divList = document.createElement("div");
+divList.setAttribute("class", "categoryList");
+divList.setAttribute("id", idSection + "List");
 
 const resultsImagesUrl = [];
 const resultsLinksUrl = [];
+
 function allresultsCategoryFunc(result) {
-  for (let i = 0; i < 5; i++){
+  for (let i = 0; i < 5; i++) {
     resultsImagesUrl.push(JSON.parse(result.responseText).results[i].image_url);  
     resultsLinksUrl.push(JSON.parse(result.responseText).results[i].url);  
   }
-  if (resultsImagesUrl.length > 7){
+  if (resultsImagesUrl.length > 7) {
     for (let i = 0; i < 7; i++) {
-      const Link = document.createElement("a");
-      Link.setAttribute('href', resultsLinksUrl[i]);
-      elt.appendChild(Link);
-      Link.innerHTML = "<img src=" + resultsImagesUrl[i] + "alt='Category Film Image' />";
+      const linkFilm = document.createElement("li");
+      linkFilm.innerHTML = "<img src=" + resultsImagesUrl[i] + "alt='Category Film Image' />";
+      linkFilm.onclick = function() {
+        loadResults(resultsLinksUrl[i], FilmResultsModale);
+        modal.style.display = "block";
+      }
+      divList.appendChild(linkFilm);
     }
-  } 
+  }
+  section.appendChild(divList);
 }
-for (i = 1; i < 3; i++) {
-  let url = actionFilmUrlList + "&page=" + i;
-  loadResults(url, allresultsCategoryFunc);
-}
-
-
-
-
-
+loadResults(FilmUrlList + "&page=1", allresultsCategoryFunc) & loadResults(FilmUrlList + "&page=2", allresultsCategoryFunc);
+;

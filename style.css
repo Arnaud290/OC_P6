@@ -46,17 +46,22 @@ header nav ul
 {
     display: flex;
     float: right;
-    list-style-type: none;
     margin-top: 0em;
     font-size: 1.3em;
     color: #181818;
     padding-bottom: 3px; 
+    
 }   
  
+li
+{
+    list-style-type: none;    
+}
+
+
 header nav li
 {
     margin-right: 20px;    
-    
 }
 
 /* Best film block */
@@ -115,6 +120,7 @@ header nav li
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+   
   }
   
   /* Modal Content/Box */
@@ -129,6 +135,7 @@ header nav li
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     color: black;
+    border-radius: 50px;
   }
   
   .modal-content p
@@ -153,7 +160,7 @@ header nav li
 
 .category
   {
-    display: flex;
+    display: flex;  
     flex-direction: column;
     align-items:center; 
     background-color: rgb(85, 75, 75);
@@ -162,6 +169,13 @@ header nav li
 }
   .category h1
   {
+    text-align: center;
     font-size: 3em;
     font-weight: bold; 
+  }
+
+  .categoryList
+  {
+    display: flex;
+   
   }
