@@ -158,7 +158,7 @@ header nav li
     cursor: pointer;
   }
 
-.category
+  .category
   {
     display: flex;  
     flex-direction: column;
@@ -166,7 +166,7 @@ header nav li
     background-color: rgb(85, 75, 75);
     border-radius: 50px;
     margin-top: 0.3em;
-}
+  }
   .category h1
   {
     text-align: center;
@@ -177,5 +177,9 @@ header nav li
   .categoryList
   {
     display: flex;
-   
+  }
+
+  .categoryList li
+  {
+    margin-right: 2em;
   }

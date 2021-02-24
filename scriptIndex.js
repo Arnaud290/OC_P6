@@ -3,7 +3,7 @@
 
 /* Requests AJAX*/
 
-function loadResults(url, functionUrl) {
+function loadResults(url, functionUrl, status) {
   var xhttp;
   xhttp=new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -11,7 +11,7 @@ function loadResults(url, functionUrl) {
       functionUrl(this);
     }
  }
-  xhttp.open("GET", url, true);
+  xhttp.open("GET", url, status);
   xhttp.send();
 }
 
@@ -21,7 +21,7 @@ let bestFilmUrl;
 
 function bestFilmUrlFunc(result) {
   bestFilmUrl = JSON.parse(result.responseText).results[0].url;   
-  loadResults(bestFilmUrl, bestFilmResultMainPage);
+  loadResults(bestFilmUrl, bestFilmResultMainPage, true);
 
 }
 
@@ -31,12 +31,12 @@ function bestFilmResultMainPage(result){
   document.getElementById("bestFilmDescription").innerHTML = JSON.parse(result.responseText).description;
 }
 
-loadResults(bestFilmUrlList, bestFilmUrlFunc);
+loadResults(bestFilmUrlList, bestFilmUrlFunc, true);
 
 let btn = document.getElementById("boutonInfo");
 
 btn.onclick = function() {
-  loadResults(bestFilmUrl, FilmResultsModale);
+  loadResults(bestFilmUrl, FilmResultsModale, true);
   modal.style.display = "block";
 }
 
@@ -72,8 +72,8 @@ window.onclick = function(event) {
 }
 
 // Categories
-
-let FilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score";
+let genre = "Action"
+let FilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score&genre="+genre;
 let section = document.createElement("section");
 let idSection = "bestFilms";
 let titleCategory = "Films les mieux Notés";
@@ -113,5 +113,6 @@ function allresultsCategoryFunc(result) {
   }
   section.appendChild(divList);
 }
-loadResults(FilmUrlList + "&page=1", allresultsCategoryFunc) & loadResults(FilmUrlList + "&page=2", allresultsCategoryFunc);
-;
+for (let i = 1; i < 3; i++) {  
+  loadResults(FilmUrlList + "&page=" + i, allresultsCategoryFunc, false);
+}
