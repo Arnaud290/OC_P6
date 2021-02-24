@@ -33,7 +33,8 @@ header h1
 nav a
 {
     text-decoration: none;
-    color:#181818;
+    margin-right: 20px;
+    color: #000000
 }
 
 nav a:hover
@@ -112,7 +113,7 @@ header nav li
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 3; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -174,12 +175,45 @@ header nav li
     font-weight: bold; 
   }
 
-  .categoryList
-  {
-    display: flex;
-  }
+/* slide */
 
-  .categoryList li
-  {
-    margin-right: 2em;
-  }
+.prev, .next
+{
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    opacity: 0.3;
+    font-size: 50px;
+    color: rgba(220, 220, 220, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 50px;
+    height: 65px;
+    text-align: center;
+}
+
+.prev
+{
+    left: 30px;
+    margin-right: 10px;
+}
+
+.next
+{
+    right: 30px;
+}
+
+.prev:hover,
+.next:hover 
+{
+    opacity: 1;
+}
+
+.list
+{
+  display: flex;
+  align-items: center;
+}
+
+.slide
+{
+    margin-right: 10px;
+}
