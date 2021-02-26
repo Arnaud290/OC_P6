@@ -1,3 +1,4 @@
+/* General */
 body
 {
     background-color: #181818;
@@ -10,14 +11,20 @@ body
     width: 900px;
     margin: auto;
 }
+
+/* Header block */
 header
 {
     display: flex;
     background-color: rgb(184, 34, 34);
-    height: 200px; 
-    flex-direction: column;
-    align-items:center; 
+    height: 300px; 
+    align-items: center;
     border-radius: 50px;
+}
+
+header #logo
+{
+    margin-left: 50px;
 }
 
 header h1
@@ -27,17 +34,16 @@ header h1
     font-style: oblique;
     margin-top: 0em;
     margin-bottom: 0em;
-    
 }
 
-nav a
+header nav a
 {
     text-decoration: none;
     margin-right: 20px;
     color: #000000
 }
 
-nav a:hover
+header nav a:hover
 {
     color: #ffffff
 }
@@ -46,15 +52,13 @@ nav a:hover
 header nav ul
 {
     display: flex;
-    float: right;
     margin-top: 0em;
     font-size: 1.3em;
     color: #181818;
-    padding-bottom: 3px; 
-    
+    padding-bottom: 3px;
 }   
- 
-li
+
+header nav ul li
 {
     list-style-type: none;    
 }
@@ -65,7 +69,8 @@ header nav li
     margin-right: 20px;    
 }
 
-/* Best film block */
+
+/* Best film */
 #bestFilm
 {
     display: flex;
@@ -107,76 +112,84 @@ header nav li
 
 }
 
-/* Modal block */
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 3; /* Sit on top */
+/* Modal window*/
+.modal 
+{
+    display: none; 
+    position: fixed; 
+    z-index: 3; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-   
-  }
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4);  
+}
   
-  /* Modal Content/Box */
-  .modal-content {
+.modal-content
+{
     display: flex;
     flex-direction: column;  
     align-items:center; 
     opacity: 90%;
     background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%;
     color: black;
     border-radius: 50px;
-  }
+}
   
-  .modal-content p
-  {
+.modal-content p
+{
       text-align: center;
-  }
+}
 
-  /* The Close Button */
-  .close {
+#actors
+{
+    text-align: center;
+}
+
+#long_description
+{
+    text-align: justify;
+}
+  
+.close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
   
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+.close:hover, .close:focus
+{
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
 
-  .category
-  {
-    display: flex;  
-    flex-direction: column;
-    align-items:center; 
-    background-color: rgb(85, 75, 75);
-    border-radius: 50px;
-    margin-top: 0.3em;
-  }
-  .category h1
-  {
-    text-align: center;
-    font-size: 3em;
-    font-weight: bold; 
-  }
+/* Categories */
+.category
+{
+display: flex;  
+flex-direction: column;
+align-items:center; 
+background-color: rgb(85, 75, 75);
+border-radius: 50px;
+margin-top: 0.3em;
+}
 
-/* slide */
+.category h1
+{
+text-align: center;
+font-size: 3em;
+font-weight: bold; 
+}
 
+/* Slides */
 .prev, .next
 {
     cursor: pointer;
@@ -201,8 +214,7 @@ header nav li
     right: 30px;
 }
 
-.prev:hover,
-.next:hover 
+.prev:hover, .next:hover 
 {
     opacity: 1;
 }
@@ -216,4 +228,62 @@ header nav li
 .slide
 {
     margin-right: 10px;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px)
+{
+    /* Header block */
+    header nav a
+    {
+        margin-bottom: 20px;
+    }
+
+    header nav ul
+    {
+        flex-direction: column;
+        font-size: 0.8em;
+    } 
+    /* Best film */
+    .description
+    {
+        max-width: 100%;
+    }
+
+    /*categories */
+    .category
+    {
+        height: 450px;
+    }
+
+    .category h1
+    {
+        margin-top: 0px;
+    }
+
+    /*slides*/
+    .list
+    {
+        margin-top: 0px;
+    }
+
+    .slide4 
+    {
+        display: none; 
+    }
+
+    .prev, .next
+    {
+        position: absolute;
+    }
+
+    .prev
+    {
+        left: 0px;
+    }
+
+    .next
+    {
+        right: 0px;
+    }
 }

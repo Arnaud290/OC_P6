@@ -11,6 +11,7 @@ function loadResults(url, functionUrl, status) {
   xhttp.open("GET", url, status);
   xhttp.send();
 }
+
 //Best film request
 let bestFilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score";
 let bestFilmUrl;
@@ -29,6 +30,7 @@ btn.onclick = function() {
   loadResults(bestFilmUrl, FilmResultsModale, true);
   modal.style.display = "block";
 }
+
 //Modal Results
 function FilmResultsModale(result){
     document.getElementById("filmImage").innerHTML = "<img src=" + JSON.parse(result.responseText).image_url + "alt='Best Film Image' />";
@@ -44,6 +46,7 @@ function FilmResultsModale(result){
     document.getElementById("worldwide_gross_income").innerHTML = JSON.parse(result.responseText).worldwide_gross_income + ' entrées';
     document.getElementById("long_description").innerHTML = JSON.parse(result.responseText).long_description;
 }
+
 // Modal Window
 let modal = document.getElementById("myModal");
 let span = document.getElementsByClassName("close")[0];
@@ -57,7 +60,6 @@ window.onclick = function(event) {
 }
 
 // Categories
-
 function Category(titleCategory){
   let genre = '';
   let idSection;
@@ -92,13 +94,16 @@ function Category(titleCategory){
   divSlider.setAttribute("class", "list");
   let divSlide1 = document.createElement("div");
   divSlide1.setAttribute("id", "slide1" + idSection);
-  divSlide1.setAttribute("class", "slide");
+  divSlide1.setAttribute("class", "slide slide1");
   let divSlide2 = document.createElement("div");
   divSlide2.setAttribute("id", "slide2" + idSection);
-  divSlide2.setAttribute("class", "slide");
+  divSlide2.setAttribute("class", "slide slide2");
   let divSlide3 = document.createElement("div");
   divSlide3.setAttribute("id", "slide3" + idSection);
-  divSlide3.setAttribute("class", "slide");
+  divSlide3.setAttribute("class", "slide slide3");
+  let divSlide4 = document.createElement("div");
+  divSlide4.setAttribute("id", "slide4" + idSection);
+  divSlide4.setAttribute("class", "slide slide4");
   const resultsImagesUrl = [];
   const resultsLinksUrl = [];
   function allresultsCategoryFunc(result) {
@@ -126,19 +131,30 @@ function Category(titleCategory){
   divSlider.appendChild(divSlide1);
   divSlider.appendChild(divSlide2);
   divSlider.appendChild(divSlide3);
+  divSlider.appendChild(divSlide4);
   section.appendChild(divSlider);
   let nbSlide = 0;
   function changeSlide(direction) {
     nbSlide = nbSlide + direction;
-    if (nbSlide < 0) {
-      nbSlide = 4;
-    }
-    if (nbSlide > 4) {
-      nbSlide = 0;
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      if (nbSlide < 0) {
+        nbSlide = 4;
+        }
+      if (nbSlide > 4) {
+        nbSlide = 0;
+        }
+      } else {
+        if (nbSlide < 0) {
+          nbSlide = 3;
+          }
+        if (nbSlide > 3) {
+          nbSlide = 0;
+      }
     }
     document.getElementById("slide1" + idSection).innerHTML = slide[nbSlide];
     document.getElementById("slide2" + idSection).innerHTML = slide[nbSlide + 1];
     document.getElementById("slide3" + idSection).innerHTML = slide[nbSlide + 2];
+    document.getElementById("slide4" + idSection).innerHTML = slide[nbSlide + 3];
   }
   for (let i = 1; i < 3; i++) {  
     loadResults(FilmUrlList + "&page=" + i, allresultsCategoryFunc, false);
@@ -162,7 +178,7 @@ function Category(titleCategory){
     changeSlide(+1);
   }
 }
-
+//run categories
 const categories = [
   "Film les mieux notés",
   "Comedy",
@@ -173,4 +189,3 @@ const categories = [
 for (let category of categories) {
   Category(category);
 }
-
