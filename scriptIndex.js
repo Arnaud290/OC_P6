@@ -1,50 +1,55 @@
-
 /* Requests AJAX*/
-function loadResults(url, functionUrl, status) {
-  var xhttp;
-  xhttp=new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      functionUrl(this);
+function loadResults(url, functionUrl) {
+
+  fetch(url).then(function(response) {
+    if(response.ok) {
+      return response.json().then(
+        function (data) {
+          return functionUrl(data);
+        })
+    } else {
+      console.log('Mauvaise réponse du réseau');
     }
- }
-  xhttp.open("GET", url, status);
-  xhttp.send();
+  })
+  .catch(function(error) {
+    console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+  });
+  
 }
 
 //Best film request
 let bestFilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score";
 let bestFilmUrl;
 function bestFilmUrlFunc(result) {
-  bestFilmUrl = JSON.parse(result.responseText).results[0].url;   
-  loadResults(bestFilmUrl, bestFilmResultMainPage, true);
+  bestFilmUrl = result.results[0].url;   
+  loadResults(bestFilmUrl, bestFilmResultMainPage);
 }
 function bestFilmResultMainPage(result){
-  document.getElementById("bestFilmImage").innerHTML = "<img src=" + JSON.parse(result.responseText).image_url + "alt='Best Film Image' height='400' width='300'/>";
-  document.getElementById("bestFilmTitle").innerHTML = JSON.parse(result.responseText).original_title;
-  document.getElementById("bestFilmDescription").innerHTML = JSON.parse(result.responseText).description;
+  document.getElementById("bestFilmImage").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' height='400' width='300'/>";
+  document.getElementById("bestFilmTitle").innerHTML = result.original_title;
+  document.getElementById("bestFilmDescription").innerHTML = result.description;
 }
-loadResults(bestFilmUrlList, bestFilmUrlFunc, true);
+loadResults(bestFilmUrlList, bestFilmUrlFunc);
 let btn = document.getElementById("boutonInfo");
 btn.onclick = function() {
-  loadResults(bestFilmUrl, FilmResultsModale, true);
+  loadResults(bestFilmUrl, FilmResultsModale);
   modal.style.display = "block";
 }
 
 //Modal Results
 function FilmResultsModale(result){
-    document.getElementById("filmImage").innerHTML = "<img src=" + JSON.parse(result.responseText).image_url + "alt='Best Film Image' />";
-    document.getElementById("original_title").innerHTML = JSON.parse(result.responseText).original_title;
-    document.getElementById("genres").innerHTML = JSON.parse(result.responseText).genres;
-    document.getElementById("date_published").innerHTML = JSON.parse(result.responseText).date_published;
-    document.getElementById("rated").innerHTML = JSON.parse(result.responseText).rated;
-    document.getElementById("imdb_score").innerHTML = JSON.parse(result.responseText).imdb_score;
-    document.getElementById("directors").innerHTML = JSON.parse(result.responseText).directors;
-    document.getElementById("actors").innerHTML = JSON.parse(result.responseText).actors;
-    document.getElementById("duration").innerHTML = JSON.parse(result.responseText).duration + ' min';
-    document.getElementById("countries").innerHTML = JSON.parse(result.responseText).countries;
-    document.getElementById("worldwide_gross_income").innerHTML = JSON.parse(result.responseText).worldwide_gross_income + ' entrées';
-    document.getElementById("long_description").innerHTML = JSON.parse(result.responseText).long_description;
+    document.getElementById("filmImage").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' />";
+    document.getElementById("original_title").innerHTML = result.original_title;
+    document.getElementById("genres").innerHTML = result.genres;
+    document.getElementById("date_published").innerHTML = result.date_published;
+    document.getElementById("rated").innerHTML = result.rated;
+    document.getElementById("imdb_score").innerHTML = result.imdb_score;
+    document.getElementById("directors").innerHTML = result.directors;
+    document.getElementById("actors").innerHTML = result.actors;
+    document.getElementById("duration").innerHTML = result.duration + ' min';
+    document.getElementById("countries").innerHTML = result.countries;
+    document.getElementById("worldwide_gross_income").innerHTML = result.worldwide_gross_income + ' entrées';
+    document.getElementById("long_description").innerHTML = result.long_description;
 }
 
 // Modal Window
@@ -60,7 +65,8 @@ window.onclick = function(event) {
 }
 
 // Categories
-function Category(titleCategory){
+
+function Category(titleCategory) {
   let genre = '';
   let idSection;
   if (titleCategory != "Film les mieux notés"){
@@ -72,7 +78,6 @@ function Category(titleCategory){
     }
   let FilmUrlList = "http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score&genre=" + genre;
   let section = document.createElement("section");
-  
   let nav = document.createElement("a");
   nav.setAttribute("href", '#'+ idSection);
   nav.textContent = titleCategory;   
@@ -107,9 +112,10 @@ function Category(titleCategory){
   const resultsImagesUrl = [];
   const resultsLinksUrl = [];
   function allresultsCategoryFunc(result) {
+
     for (let i = 0; i < 5; i++) {
-      resultsImagesUrl.push(JSON.parse(result.responseText).results[i].image_url);  
-      resultsLinksUrl.push(JSON.parse(result.responseText).results[i].url);  
+      resultsImagesUrl.push(result.results[i].image_url);  
+      resultsLinksUrl.push(result.results[i].url);  
     }
     if (resultsImagesUrl.length > 7) {
       for (let i = 0; i < 7; i++) {
@@ -118,6 +124,9 @@ function Category(titleCategory){
     }
     changeSlide(0);
     divSlider.appendChild(divControlNext);
+    document.getElementById("next" + idSection).onclick = function() {
+      changeSlide(+1);
+    }
   }
   let divControlPrev = document.createElement("div");
   let divControlNext = document.createElement("div");
@@ -156,9 +165,11 @@ function Category(titleCategory){
     document.getElementById("slide3" + idSection).innerHTML = slide[nbSlide + 2];
     document.getElementById("slide4" + idSection).innerHTML = slide[nbSlide + 3];
   }
+
   for (let i = 1; i < 3; i++) {  
-    loadResults(FilmUrlList + "&page=" + i, allresultsCategoryFunc, false);
+    loadResults(FilmUrlList + "&page=" + i, allresultsCategoryFunc);
   }
+  
   document.getElementById("slide1" + idSection).onclick = function() {
     loadResults(resultsLinksUrl[nbSlide], FilmResultsModale);
     modal.style.display = "block";
@@ -171,13 +182,15 @@ function Category(titleCategory){
     loadResults(resultsLinksUrl[nbSlide + 2], FilmResultsModale);
     modal.style.display = "block";
   }
+  document.getElementById("slide4" + idSection).onclick = function() {
+    loadResults(resultsLinksUrl[nbSlide + 3], FilmResultsModale);
+    modal.style.display = "block";
+  }
   document.getElementById("prev" + idSection).onclick = function() {
     changeSlide(-1);
   }
-  document.getElementById("next" + idSection).onclick = function() {
-    changeSlide(+1);
-  }
 }
+
 //run categories
 const categories = [
   "Film les mieux notés",
