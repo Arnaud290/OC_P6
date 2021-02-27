@@ -14,7 +14,6 @@ function loadResults(url, functionUrl) {
   .catch(function(error) {
     console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
   });
-  
 }
 
 //Best film request
@@ -97,26 +96,35 @@ function Category(titleCategory) {
   divSlider.setAttribute("id", "slider" + idSection);
   divSlider.setAttribute("id", idSection + "List");
   divSlider.setAttribute("class", "list");
-  let divSlide1 = document.createElement("div");
-  divSlide1.setAttribute("id", "slide1" + idSection);
-  divSlide1.setAttribute("class", "slide slide1");
-  let divSlide2 = document.createElement("div");
-  divSlide2.setAttribute("id", "slide2" + idSection);
-  divSlide2.setAttribute("class", "slide slide2");
-  let divSlide3 = document.createElement("div");
-  divSlide3.setAttribute("id", "slide3" + idSection);
-  divSlide3.setAttribute("class", "slide slide3");
-  let divSlide4 = document.createElement("div");
-  divSlide4.setAttribute("id", "slide4" + idSection);
-  divSlide4.setAttribute("class", "slide slide4");
+
+  let divControlPrev = document.createElement("div");
+  let divControlNext = document.createElement("div");
+  divControlPrev.setAttribute("id", "prev" + idSection);
+  divControlPrev.setAttribute("class", "prev");
+  divControlPrev.textContent = "<";
+  divControlNext.setAttribute("id", "next" + idSection);
+  divControlNext.setAttribute("class", "next");
+  divControlNext.textContent = ">";
+  divSlider.appendChild(divControlPrev);
+
+  for (let i=1; i<5; i++){
+    let divSlide = document.createElement("div");
+    divSlide.setAttribute("id", "slide" + i + idSection);
+    divSlide.setAttribute("class", "slide slide" + i);
+    divSlider.appendChild(divSlide);
+  }
+
   const resultsImagesUrl = [];
   const resultsLinksUrl = [];
   function allresultsCategoryFunc(result) {
 
-    for (let i = 0; i < 5; i++) {
-      resultsImagesUrl.push(result.results[i].image_url);  
-      resultsLinksUrl.push(result.results[i].url);  
+    for (element of result){
+      for (let i = 0; i < 5; i++) {
+        resultsImagesUrl.push(element.results[i].image_url);  
+        resultsLinksUrl.push(element.results[i].url);  
+      }
     }
+
     if (resultsImagesUrl.length > 7) {
       for (let i = 0; i < 7; i++) {
         slide.push("<img src=" + resultsImagesUrl[i] + "alt='Category Film Image/>");
@@ -128,19 +136,7 @@ function Category(titleCategory) {
       changeSlide(+1);
     }
   }
-  let divControlPrev = document.createElement("div");
-  let divControlNext = document.createElement("div");
-  divControlPrev.setAttribute("id", "prev" + idSection);
-  divControlPrev.setAttribute("class", "prev");
-  divControlPrev.textContent = "<";
-  divControlNext.setAttribute("id", "next" + idSection);
-  divControlNext.setAttribute("class", "next");
-  divControlNext.textContent = ">";
-  divSlider.appendChild(divControlPrev);
-  divSlider.appendChild(divSlide1);
-  divSlider.appendChild(divSlide2);
-  divSlider.appendChild(divSlide3);
-  divSlider.appendChild(divSlide4);
+
   section.appendChild(divSlider);
   let nbSlide = 0;
   function changeSlide(direction) {
@@ -160,16 +156,36 @@ function Category(titleCategory) {
           nbSlide = 0;
       }
     }
-    document.getElementById("slide1" + idSection).innerHTML = slide[nbSlide];
-    document.getElementById("slide2" + idSection).innerHTML = slide[nbSlide + 1];
-    document.getElementById("slide3" + idSection).innerHTML = slide[nbSlide + 2];
-    document.getElementById("slide4" + idSection).innerHTML = slide[nbSlide + 3];
+    for (let i=1; i<5; i++){
+      document.getElementById("slide"+ i + idSection).innerHTML = slide[nbSlide + (i - 1)];
+    }
   }
 
-  for (let i = 1; i < 3; i++) {  
-    loadResults(FilmUrlList + "&page=" + i, allresultsCategoryFunc);
+  const urlList = []
+  for (i=1; i<3; i++){
+    urlList.push(FilmUrlList + "&page="+ i);
   }
-  
+
+  async function getAllUrls(urlList) { 
+    try {
+        let data = await Promise.all(
+          urlList.map(
+                url =>
+                    fetch(url).then(
+                        (response) => response.json()
+                    ).then(
+                      function (data) {
+                        return data;})
+                    )
+        );
+        allresultsCategoryFunc(data);
+    } catch (error) {
+        console.log(error)
+        throw (error)
+    }
+  }
+  getAllUrls(urlList);
+
   document.getElementById("slide1" + idSection).onclick = function() {
     loadResults(resultsLinksUrl[nbSlide], FilmResultsModale);
     modal.style.display = "block";
