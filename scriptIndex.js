@@ -80,7 +80,7 @@ function makeCategory(category){
   let nbSlide = 0;
   const urlList = []
 
-  //make Title and block
+  //Make Title and block category
   nav.setAttribute("href", '#'+ idSection);
   nav.textContent = category;   
   document.getElementById("navigation").appendChild(nav);
@@ -95,7 +95,7 @@ function makeCategory(category){
   h1.textContent = category; 
   document.getElementById(idSection + 'Title').appendChild(h1);
 
-  //create slide block and arrows elements 
+  //Create slide block and arrows elements 
   let divSlider = document.createElement("div");
   divSlider.setAttribute("id", idSection + "List");
   divSlider.setAttribute("class", "list");
@@ -109,7 +109,7 @@ function makeCategory(category){
   divControlNext.textContent = ">";
   divSlider.appendChild(divControlPrev);
 
-  //create and insert slides blocks and preview arrow into slide block  
+  //Create and insert slides blocks and preview arrow into slide block  
   for (let i=1; i<5; i++){
     let divSlide = document.createElement("div");
     divSlide.setAttribute("id", "slide" + i + idSection);
@@ -148,9 +148,10 @@ function makeCategory(category){
   }
 }
 
+//Change slide Category
 function changeSlide(direction, nbSlide) {
   nbSlide = nbSlide + direction;
-  if (window.matchMedia("(max-width: 900px)").matches) {
+  if (window.matchMedia("(max-width: 1280px)").matches) {
     if (nbSlide < 0) {
       nbSlide = 4;
       }
@@ -168,6 +169,7 @@ function changeSlide(direction, nbSlide) {
   return nbSlide;
 }
 
+// Request category films
 async function getAllUrls(urlList, resultsImagesUrl, resultsLinksUrl, picturesSlides, idSection) { 
   try {
       let data = await Promise.all(
@@ -199,7 +201,7 @@ async function getAllUrls(urlList, resultsImagesUrl, resultsLinksUrl, picturesSl
   displayPictureSlide(idSection, picturesSlides, 0);
   
 }
-
+// Display category films
 function displayPictureSlide(idSection, picturesSlides, nbSlide){
   for (let i=1; i<5; i++){
     if (nbSlide + (i - 1) !== 7){
@@ -210,8 +212,7 @@ function displayPictureSlide(idSection, picturesSlides, nbSlide){
   }
 }
 
-//run categories
-
+// Generate categories
 const categories = [
   "Film les mieux notés",
   "Comedy",
