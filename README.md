@@ -8,7 +8,7 @@
 
 Création d'une interface web utilisant l'API "OCMovies-API" permettant d'afficher le meilleur film selon le score du site IMDB, 
 Une catégorie des sept meilleurs films ainsi que trois autres catégories.
-Lors d'un clique sur un film, une fenêtre modale contenant l'image du film et ses informations doit s'afficher.  
+Lors d'un clic sur un film, une fenêtre modale contenant l'image du film et ses informations doit s'afficher.  
 
 
 ## Installation
