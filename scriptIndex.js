@@ -20,12 +20,12 @@ function bestFilmUrlFunc(result) {
   loadResults(bestFilmUrl, bestFilmResultMainPage);
 }
 function bestFilmResultMainPage(result){
-  document.getElementById("bestFilmImage").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' height='400' width='300'/>";
-  document.getElementById("bestFilmTitle").innerHTML = result.original_title;
-  document.getElementById("bestFilmDescription").innerHTML = result.description;
+  document.getElementById("bestFilm__image").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' height='400' width='300'/>";
+  document.getElementById("bestFilm__title").innerHTML = result.original_title;
+  document.getElementById("bestFilm__description").innerHTML = result.description;
 }
 loadResults(bestFilmUrlList, bestFilmUrlFunc);
-let btn = document.getElementById("boutonInfo");
+let btn = document.getElementById("bestFilm__buttonInfo");
 btn.onclick = function() {
   loadResults(bestFilmUrl, FilmResultsModale);
   modal.style.display = "block";
@@ -33,23 +33,23 @@ btn.onclick = function() {
 
 //Modal Results
 function FilmResultsModale(result){
-    document.getElementById("filmImage").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' />";
-    document.getElementById("original_title").innerHTML = result.original_title;
-    document.getElementById("genres").innerHTML = result.genres;
-    document.getElementById("date_published").innerHTML = result.date_published;
-    document.getElementById("rated").innerHTML = result.rated;
-    document.getElementById("imdb_score").innerHTML = result.imdb_score;
-    document.getElementById("directors").innerHTML = result.directors;
-    document.getElementById("actors").innerHTML = result.actors;
-    document.getElementById("duration").innerHTML = result.duration + ' min';
-    document.getElementById("countries").innerHTML = result.countries;
-    document.getElementById("worldwide_gross_income").innerHTML = result.worldwide_gross_income + ' entrées';
-    document.getElementById("long_description").innerHTML = result.long_description;
+    document.getElementById("headerModal__filmImage").innerHTML = "<img src=" + result.image_url + "alt='Best Film Image' />";
+    document.getElementById("headerModal__originalTitle").innerHTML = result.original_title;
+    document.getElementById("infoModalText__genres").innerHTML = result.genres;
+    document.getElementById("infoModalText__datePublished").innerHTML = result.date_published;
+    document.getElementById("infoModalText__rated").innerHTML = result.rated;
+    document.getElementById("infoModalText__imdbScore").innerHTML = result.imdb_score;
+    document.getElementById("infoModalText__directors").innerHTML = result.directors;
+    document.getElementById("infoModalText__actors").innerHTML = result.actors;
+    document.getElementById("infoModalText__duration").innerHTML = result.duration + ' min';
+    document.getElementById("infoModalText__countries").innerHTML = result.countries;
+    document.getElementById("infoModalText__worldwideGrossIncome").innerHTML = result.worldwide_gross_income + ' $';
+    document.getElementById("infoModalText__longDescription").innerHTML = result.long_description;
 }
 
 // Modal Window
-let modal = document.getElementById("myModal");
-let span = document.getElementsByClassName("close")[0];
+let modal = document.getElementById("infoModal");
+let span = document.getElementsByClassName("modalContent__close")[0];
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -77,18 +77,18 @@ function makeCategory(category){
   const resultsImagesUrl = [];
   const resultsLinksUrl = [];
   const picturesSlides = [];
-  let nbSlide = 0;
   const urlList = []
-
+  let nbSlide = 0;
+  
   //Make Title and block category
   nav.setAttribute("href", '#'+ idSection);
   nav.textContent = category;   
-  document.getElementById("navigation").appendChild(nav);
+  document.getElementById("header__navigation").appendChild(nav);
   section.setAttribute("class", "category");
   section.setAttribute("id", idSection);
-  document.getElementById("blockPage").appendChild(section);
+  document.getElementById("body__blockPage").appendChild(section);
   let p = document.createElement("p");
-  p.setAttribute("class", "titleCategory");
+  p.setAttribute("class", "Category__title");
   p.setAttribute("id", idSection + 'Title');
   section.appendChild(p);
   let h1 = document.createElement("h1");
@@ -99,25 +99,25 @@ function makeCategory(category){
   let divSlider = document.createElement("div");
   divSlider.setAttribute("id", idSection + "List");
   divSlider.setAttribute("class", "list");
-  let divControlPrev = document.createElement("div");
-  let divControlNext = document.createElement("div");
-  divControlPrev.setAttribute("id", "prev" + idSection);
-  divControlPrev.setAttribute("class", "prev");
-  divControlPrev.textContent = "<";
-  divControlNext.setAttribute("id", "next" + idSection);
-  divControlNext.setAttribute("class", "next");
-  divControlNext.textContent = ">";
-  divSlider.appendChild(divControlPrev);
+  let spanControlPrev = document.createElement("span");
+  let spanControlNext = document.createElement("span");
+  spanControlPrev.setAttribute("id", "prev" + idSection);
+  spanControlPrev.setAttribute("class", "category__prev");
+  spanControlPrev.textContent = "<";
+  spanControlNext.setAttribute("id", "next" + idSection);
+  spanControlNext.setAttribute("class", "category__next");
+  spanControlNext.textContent = ">";
+  divSlider.appendChild(spanControlPrev);
 
   //Create and insert slides blocks and preview arrow into slide block  
   for (let i=1; i<5; i++){
-    let divSlide = document.createElement("div");
-    divSlide.setAttribute("id", "slide" + i + idSection);
-    divSlide.setAttribute("class", "slide slide" + i);
-    divSlider.appendChild(divSlide);
+    let spanSlide = document.createElement("span");
+    spanSlide.setAttribute("id", "slide" + i + idSection);
+    spanSlide.setAttribute("class", "category__slide category__slide" + i);
+    divSlider.appendChild(spanSlide);
   }
   section.appendChild(divSlider);
-  divSlider.appendChild(divControlNext);
+  divSlider.appendChild(spanControlNext);
 
   // List of urls
   for (i=1; i<3; i++){
@@ -144,7 +144,6 @@ function makeCategory(category){
   document.getElementById("next" + idSection).onclick = function() {
     nbSlide = changeSlide(+1, nbSlide)
     displayPictureSlide(idSection, picturesSlides, nbSlide);
-    console.log(nbSlide)
   }
 }
 
